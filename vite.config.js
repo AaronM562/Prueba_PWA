@@ -3,6 +3,6 @@ import vue from "@vitejs/plugin-vue";
 
 // https://vite.dev/config/
 export default defineConfig({
-  base: "/multiplo-divisores/",
+  base: "/multiplo-divisores/index.html",
   plugins: [vue()],
 });
