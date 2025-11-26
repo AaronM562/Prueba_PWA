@@ -5,14 +5,11 @@ self.addEventListener("install", (event) => {
     caches.open(cacheName).then((cache) =>
       cache.addAll([
         "/", // raíz
-        "/index.html", // principal
-        "/style.css", // tu CSS global
-        "/manifest.json", // manifest
-        "/vite.svg", // icono de Vite (existe en public)
-
-        // ICONOS DE TU PWA
-        "/image/Icon_image.png",
-        "/image/Icon_image2.png",
+        "/multiplos-divisores/",
+        "/multiplos-divisores/index.html",
+        "/multiplos-divisores/manifest.json",
+        "/multiplos-divisores/image/Icon_image.png",
+        "/multiplos-divisores/image/Icon_image2.png",
       ])
     )
   );
