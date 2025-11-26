@@ -1,0 +1,250 @@
+:root {
+  --color-primary: #007bff;
+  --color-secondary: #ff6b6b;
+  --color-accent: #ffd93d;
+  --color-bg: #f2f2f2;
+  --color-card-bg: white;
+  --color-text: #333;
+}
+
+/* ---------- GENERAL ---------- */
+body {
+  background: var(--color-bg);
+  font-family: "Segoe UI", sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+#app {
+  max-width: 900px;
+  margin: auto;
+  padding: 20px;
+  color: var(--color-text);
+}
+
+/* ---------- TITULOS ---------- */
+.main-title {
+  font-size: 2.4rem;
+  text-align: center;
+  margin-bottom: 30px;
+  color: var(--color-primary);
+}
+
+.section-title {
+  font-size: 1.8rem;
+  margin-bottom: 10px;
+  color: var(--color-secondary);
+}
+
+/* ---------- SECCIONES ---------- */
+.section {
+  margin-bottom: 40px;
+  padding: 20px;
+  border-left: 6px solid var(--color-primary);
+  background: white;
+  border-radius: 10px;
+}
+
+/* ---------- TARJETAS ---------- */
+.card {
+  background: var(--color-card-bg);
+  padding: 18px;
+  border-radius: 10px;
+  margin-top: 12px;
+  border: 2px solid var(--color-primary);
+}
+
+/* ---------- GRID PARA NOTICIAS ---------- */
+.news-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: 16px;
+}
+
+.news-item {
+  border-left: 6px solid var(--color-secondary);
+}
+
+/* ---------- LISTAS ---------- */
+.Lib-ul li {
+  margin-bottom: 8px;
+  padding-left: 10px;
+}
+
+/* ---------- EJEMPLOS ---------- */
+.ejemplo strong {
+  color: var(--color-secondary);
+  :root {
+    --color-primary: #007bff;
+    --color-secondary: #ff6b6b;
+    --color-accent: #ffd93d;
+  }
+  .contenedor {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+  }
+  .number_box {
+    width: 220px;
+    padding: 10px;
+    border: 2px solid var(--color-primary);
+    border-radius: 5px;
+    font-size: 16px;
+  }
+  .signo_box {
+    width: 220px;
+    padding: 10px;
+    font-size: 16px;
+  }
+  .btn_calcular,
+  .btn_limpiar {
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    background-color: var(--color-secondary);
+    color: white;
+    border: none;
+    border-radius: 8px;
+  }
+  .resultado_box {
+    width: 260px;
+    height: 120px;
+    padding: 10px;
+    font-size: 16px;
+  }
+  .titulo {
+    font-size: 2rem;
+    color: var(--color-primary);
+  }
+  .section {
+    background: white;
+    padding: 20px;
+    border-left: 6px solid var(--color-primary);
+    border-radius: 10px;
+  }
+  .contenido {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    align-items: center;
+  }
+  .Encabezado {
+    margin-bottom: 20px;
+    flex-direction: row;
+    background-color: var(--color-primary);
+    height: 100%;
+    padding: 20px;
+    border-radius: 10px;
+  }
+  .encabezado_options {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+    justify-content: center;
+  }
+  :root {
+    --color-primary: #007bff;
+    --color-secondary: #ff6b6b;
+    --color-accent: #ffd93d;
+    --color-bg: #f2f2f2;
+    --color-card-bg: white;
+    --color-text: #333;
+  }
+
+  /* ---------- GENERAL ---------- */
+  body {
+    background: var(--color-bg);
+    font-family: "Segoe UI", sans-serif;
+    margin: 0;
+    padding: 0;
+  }
+
+  #app {
+    width: 100%;
+    max-width: 95%;
+    padding: 20px;
+    align-items: center;
+  }
+
+  /* ---------- TITULOS ---------- */
+  .main-title {
+    font-size: 2.4rem;
+    text-align: center;
+    margin-bottom: 30px;
+    color: var(--color-bg);
+  }
+
+  .section-title {
+    font-size: 1.8rem;
+    margin-bottom: 10px;
+    color: var(--color-secondary);
+  }
+
+  /* ---------- SECCIONES ---------- */
+  .section {
+    margin-bottom: 20px auto;
+    padding: 20px;
+    width: 100%;
+    border-left: 6px solid var(--color-primary);
+    background: white;
+    border-radius: 10px;
+    box-sizing: border-box;
+  }
+
+  /* ---------- TARJETAS ---------- */
+  .card {
+    background: var(--color-card-bg);
+    padding: 18px;
+    border-radius: 10px;
+    margin-top: 12px;
+    border: 2px solid var(--color-primary);
+  }
+
+  /* ---------- GRID PARA NOTICIAS ---------- */
+  .news-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    gap: 16px;
+  }
+
+  .news-item {
+    border-left: 6px solid var(--color-secondary);
+  }
+
+  /* ---------- LISTAS ---------- */
+  .Lib-ul li {
+    margin-bottom: 8px;
+    padding-left: 10px;
+  }
+
+  /* ---------- EJEMPLOS ---------- */
+  .ejemplo strong {
+    color: var(--color-secondary);
+  }
+  .Encabezado {
+    margin-bottom: 20px;
+    flex-direction: row;
+    background-color: var(--color-primary);
+    height: 100%;
+    padding: 20px;
+    border-radius: 10px;
+  }
+  .encabezado_options {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+    justify-content: center;
+  }
+  .btn_direccion {
+    background-color: var(--color-primary);
+    color: white;
+    padding: 10px 16px;
+    border-radius: 8px;
+    font-weight: bold;
+    border: none;
+    cursor: pointer;
+  }
+}

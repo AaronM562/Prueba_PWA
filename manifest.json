@@ -1,0 +1,26 @@
+{
+  "name": "Múltiplos y Divisores",
+  "short_name": "MyMathApp",
+  "id": "/",
+  "lang": "es",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#007bff",
+  "description": "Aplicación interactiva para practicar múltiplos y divisores.",
+  "icons": [
+    {
+      "src": "/image/Icon_image2.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/image/Icon_image2.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
