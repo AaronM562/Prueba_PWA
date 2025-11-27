@@ -1,100 +1,198 @@
 <script setup>
+import { ref } from "vue";
 import { useRouter } from "vue-router";
+
 const router = useRouter();
 
-function irAexamen() {
-  if (confirm("¿Listo para comenzar?")) {
-    router.push("/examen");
-  }
+// ------ VARIABLES DEL JUEGO ------
+const juegoActivo = ref(false);
+const modo = ref(""); // "multiplicar" o "dividir"
+const numero1 = ref(0);
+const numero2 = ref(0);
+const respuestaUsuario = ref("");
+const explicacion = ref("");
+const mensaje = ref("");
+const puntos = ref(0);
+const pasoAPaso = ref([]);
+const mostrarResultado = ref(false);
+
+// ------ INICIAR JUEGO ------
+function iniciarJuego(seleccion) {
+  modo.value = seleccion;
+  juegoActivo.value = true;
+  puntos.value = 0;
+  siguienteEjercicio();
 }
 
-function volver() {
-  if (confirm("¿Regresar al inicio?")) {
-    router.push("/");
-  }
-}
-import { ref } from "vue";
-import Examen from "./Examen.vue";
+// ------ GENERAR NUEVO EJERCICIO ------
+function siguienteEjercicio() {
+  respuestaUsuario.value = "";
+  explicacion.value = "";
+  mostrarResultado.value = false;
 
-const n1 = ref("");
-const n2 = ref("");
-const res = ref("");
-const Signo = ref("X");
-
-function calcular() {
-  const numero1 = parseFloat(n1.value);
-  const numero2 = parseFloat(n2.value);
-
-  if (isNaN(numero1) || isNaN(numero2)) {
-    res.value = "Por favor ingresa números válidos.";
-    return;
-  }
-
-  if (Signo.value === "X") {
-    res.value = numero1 * numero2;
-  } else if (Signo.value === "/") {
-    if (numero2 === 0) {
-      res.value = "Error: no se puede dividir entre 0.";
-    } else {
-      res.value = numero1 / numero2;
-    }
+  if (modo.value === "multiplicar") {
+    numero1.value = Math.floor(Math.random() * 20) + 10; // 2 dígitos
+    numero2.value = Math.floor(Math.random() * 20) + 10;
   } else {
-    res.value = "Signo no válido";
+    numero1.value = Math.floor(Math.random() * 100) + 100; // 3 dígitos
+    numero2.value = Math.floor(Math.random() * 40) + 2; // divisor 2–80
   }
+
+  pasoAPaso.value = [];
 }
 
-function limpiar() {
-  n1.value = "";
-  n2.value = "";
-  res.value = "";
-  Signo.value = "X";
+// ------ VERIFICAR RESPUESTA ------
+function verificar() {
+  const user = Number(respuestaUsuario.value);
+
+  if (modo.value === "multiplicar") {
+    const correcto = numero1.value * numero2.value;
+
+    if (user === correcto) {
+      puntos.value++;
+      mensaje.value = "¡Correcto! 🎉 Muy bien.";
+    } else {
+      mensaje.value = "Incorrecto ❌. Mira cómo se hace:";
+    }
+
+    generarExplicacionMultiplicacion(correcto);
+  }
+
+  if (modo.value === "dividir") {
+    const correcto = Math.floor(numero1.value / numero2.value);
+
+    if (user === correcto) {
+      puntos.value++;
+      mensaje.value = "¡Correcto! 🎉 Excelente.";
+    } else {
+      mensaje.value = "Incorrecto ❌. Ve el procedimiento:";
+    }
+
+    generarExplicacionDivision(correcto);
+  }
+
+  mostrarResultado.value = true;
+}
+
+// ------ EXPLICACIÓN – MULTIPLICACIÓN PASO A PASO ------
+function generarExplicacionMultiplicacion(resultado) {
+  pasoAPaso.value = [];
+  const n1 = numero1.value.toString().split("").reverse();
+  const n2 = numero2.value.toString().split("").reverse();
+
+  let productosParciales = [];
+
+  n2.forEach((d2, index2) => {
+    let parcial = 0;
+    parcial = Number(numero1.value) * Number(d2);
+
+    productosParciales.push({
+      texto: `${numero1.value} × ${d2} = ${parcial}`,
+      desplazamiento: index2,
+    });
+  });
+
+  pasoAPaso.value.push(...productosParciales);
+  pasoAPaso.value.push({
+    texto: `Resultado final: ${resultado}`,
+    final: true,
+  });
+
+  explicacion.value =
+    "Multiplicamos cada dígito del segundo número por el primero y acomodamos según la posición.";
+}
+
+// ------ EXPLICACIÓN – DIVISIÓN PASO A PASO ------
+function generarExplicacionDivision(cociente) {
+  pasoAPaso.value = [];
+
+  const dividendo = numero1.value;
+  const divisor = numero2.value;
+
+  const resto = dividendo % divisor;
+
+  pasoAPaso.value.push({
+    texto: `${dividendo} ÷ ${divisor} = ${cociente}`,
+  });
+
+  pasoAPaso.value.push({
+    texto: `${cociente} × ${divisor} = ${cociente * divisor}`,
+  });
+
+  pasoAPaso.value.push({
+    texto: `Resto: ${resto}`,
+  });
+
+  explicacion.value =
+    "Dividimos, multiplicamos el cociente por el divisor y restamos para obtener el residuo.";
+}
+
+// ------ NAVEGACIÓN ------
+function volver() {
+  router.push("/");
+}
+
+function irAexamen() {
+  router.push("/examen");
 }
 </script>
 
 <template>
   <div class="contenedor">
-    <h2 class="titulo">Ejemplo Práctico</h2>
+    <h2 class="titulo">MiniJuego Educativo</h2>
 
-    <section class="section">
-      <div class="contenido">
-        <input
-          class="number_box"
-          type="number"
-          v-model="n1"
-          placeholder="Número 1"
-        />
+    <!-- SELECCIÓN DE MODO -->
+    <div v-if="!juegoActivo" class="modo-selector">
+      <h3>¿Qué quieres practicar?</h3>
+      <button class="btn_modo" @click="iniciarJuego('multiplicar')">
+        Multiplicación ✖️
+      </button>
+      <button class="btn_modo" @click="iniciarJuego('dividir')">
+        División ➗
+      </button>
+    </div>
 
-        <select class="signo_box" v-model="Signo">
-          <option value="X">Multiplicar (X)</option>
-          <option value="/">Dividir (/)</option>
-        </select>
+    <!-- JUEGO ACTIVO -->
+    <div v-if="juegoActivo" class="section">
+      <h3 v-if="modo === 'multiplicar'">
+        Multiplica: {{ numero1 }} × {{ numero2 }}
+      </h3>
+      <h3 v-if="modo === 'dividir'">Divide: {{ numero1 }} ÷ {{ numero2 }}</h3>
 
-        <input
-          class="number_box"
-          type="number"
-          v-model="n2"
-          placeholder="Número 2"
-        />
+      <input
+        type="number"
+        class="number_box"
+        v-model="respuestaUsuario"
+        placeholder="Tu respuesta"
+      />
 
-        <button class="btn_calcular" @click="calcular">Calcular</button>
-        <button class="btn_limpiar" @click="limpiar">Limpiar</button>
+      <button class="btn_calcular" @click="verificar">Verificar</button>
 
-        <textarea class="resultado_box" v-model="res" readonly></textarea>
+      <p class="mensaje">{{ mensaje }}</p>
 
-        <div
-          style="
-            display: flex;
-            padding: 10px;
-            flex-direction: row;
-            align-items: center;
-            gap: 15px;
-          "
-        >
-          <button class="btn_calcular" @click="volver">Volver</button>
-          <button class="btn_limpiar" @click="irAexamen">Examen</button>
-        </div>
+      <div v-if="mostrarResultado" class="resultado">
+        <h4>Explicación paso a paso:</h4>
+
+        <ul>
+          <li v-for="(p, index) in pasoAPaso" :key="index">
+            {{ p.texto }}
+          </li>
+        </ul>
+
+        <p class="explicacion">{{ explicacion }}</p>
+
+        <button class="btn_siguiente" @click="siguienteEjercicio">
+          Siguiente ejercicio →
+        </button>
       </div>
-    </section>
+
+      <p class="puntaje">Puntos: {{ puntos }}</p>
+
+      <div style="display: flex; gap: 15px; margin-top: 15px">
+        <button class="btn_volver" @click="volver">Volver</button>
+        <button class="btn_examen" @click="irAexamen">Examen</button>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -104,54 +202,84 @@ function limpiar() {
   --color-secondary: #ff6b6b;
   --color-accent: #ffd93d;
 }
+
+/* Estilos generales */
 .contenedor {
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 20px;
 }
+
+.titulo {
+  font-size: 2rem;
+  color: var(--color-primary);
+}
+
+/* Selector de modo */
+.modo-selector {
+  text-align: center;
+}
+
+.btn_modo {
+  padding: 12px 20px;
+  font-size: 18px;
+  margin: 10px;
+  border-radius: 10px;
+  background: var(--color-primary);
+  border: none;
+  color: white;
+  cursor: pointer;
+}
+
+/* Juego */
+.section {
+  background: white;
+  padding: 20px;
+  width: 350px;
+  border-left: 6px solid var(--color-primary);
+  border-radius: 10px;
+}
+
 .number_box {
-  width: 220px;
+  width: 260px;
   padding: 10px;
   border: 2px solid var(--color-primary);
   border-radius: 5px;
   font-size: 16px;
 }
-.signo_box {
-  width: 220px;
-  padding: 10px;
-  font-size: 16px;
-}
+
 .btn_calcular,
-.btn_limpiar {
+.btn_siguiente,
+.btn_volver,
+.btn_examen {
   padding: 10px 20px;
+  margin-top: 10px;
   font-size: 16px;
   cursor: pointer;
-  background-color: var(--color-secondary);
-  color: white;
-  border: none;
   border-radius: 8px;
+  color: white;
+  background-color: var(--color-secondary);
+  border: none;
 }
-.resultado_box {
-  width: 260px;
-  height: 120px;
-  padding: 10px;
-  font-size: 16px;
-}
-.titulo {
-  font-size: 2rem;
+
+.puntaje {
+  font-size: 18px;
   color: var(--color-primary);
 }
-.section {
-  background: white;
-  padding: 20px;
-  border-left: 6px solid var(--color-primary);
-  border-radius: 10px;
+
+.mensaje {
+  margin-top: 10px;
+  font-weight: bold;
 }
-.contenido {
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-  align-items: center;
+
+.resultado ul {
+  padding-left: 20px;
+}
+
+.explicacion {
+  margin-top: 10px;
+  font-style: italic;
+  color: #444;
 }
 </style>
