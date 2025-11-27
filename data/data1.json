@@ -1,0 +1,60 @@
+{
+  "preguntas": [
+    {
+      "id": 1,
+      "tipo": "opcion",
+      "pregunta": "¿Cuál de los siguientes números es un divisor de 18?",
+      "opciones": ["5", "3", "7", "11"],
+      "respuesta": "3"
+    },
+    {
+      "id": 2,
+      "tipo": "opcion",
+      "pregunta": "¿Cuál de estos números no es múltiplo de 6?",
+      "opciones": ["12", "18", "20", "24"],
+      "respuesta": "20"
+    },
+    {
+      "id": 3,
+      "tipo": "vf",
+      "pregunta": "Todo número es divisor de sí mismo.",
+      "opciones": ["Verdadero", "Falso"],
+      "respuesta": "verdadero"
+    },
+    {
+      "id": 4,
+      "tipo": "opcion",
+      "pregunta": "Escribe todos los divisores de 24.",
+      "opciones": ["2", "4", "8", "24", "todas las anteriores"],
+      "respuesta": "todas las anteriores"
+    },
+    {
+      "id": 5,
+      "tipo": "vf",
+      "pregunta": "El número 1 es divisor de todos los números.",
+      "opciones": ["Verdadero", "Falso"],
+      "respuesta": "verdadero"
+    },
+    {
+      "id": 6,
+      "tipo": "opcion",
+      "pregunta": "¿Cuál de los siguientes es un múltiplo de 9?",
+      "opciones": ["14", "27", "31", "20"],
+      "respuesta": "27"
+    },
+    {
+      "id": 7,
+      "tipo": "opcion",
+      "pregunta": "Escribe el menor múltiplo común de 4 y 6.",
+      "opciones": ["2", "4", "5", "1"],
+      "respuesta": "2"
+    },
+    {
+      "id": 8,
+      "tipo": "vf",
+      "pregunta": "Un número puede tener más de dos divisores.",
+      "opciones": ["Verdadero", "Falso"],
+      "respuesta": "verdadero"
+    }
+  ]
+}
