@@ -20,7 +20,7 @@ const examenTerminado = ref(false); // Indica si se ha llegado al final
 
 // --- CARGA DE PREGUNTAS ---
 onMounted(async () => {
-  const respuesta = await fetch("/data/data1.json");
+  const respuesta = await fetch("./data/data1.json");
   const data = await respuesta.json();
   preguntas.value = data.preguntas;
   seleccionaPreguntas();
